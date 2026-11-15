@@ -42,4 +42,10 @@ public class DummyMovementInput extends ClientInput {
     public net.minecraft.world.phys.Vec2 getMoveVector() {
         return net.minecraft.world.phys.Vec2.ZERO;
     }
+
+    /** 出窍时本体不跳 */
+    @Override
+    public void makeJump() {
+        // no-op
+    }
 }

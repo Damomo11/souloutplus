@@ -7,11 +7,14 @@
   "client": [
     "MixinEntity",
     "MixinLocalPlayer",
+    "MixinCameraRange",
     "MixinGameRenderer",
     "MixinLevelRenderer",
     "MixinPlayer",
     "MixinMultiPlayerGameMode",
     "MixinGui",
+    "MixinMinecraft",
+    "MixinClientLevel",
     "malilib.MixinConfigBase"
   ],
   "injectors": {
