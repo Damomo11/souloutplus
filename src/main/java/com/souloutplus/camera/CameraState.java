@@ -52,10 +52,15 @@ public final class CameraState {
 
     private static void createCamera() {
         LocalPlayer player = MC.player;
-        if (player == null || MC.level == null) return;
+        if (player == null || MC.level == null) {
+            com.souloutplus.SoulOutPlus.LOGGER.warn("createCamera skipped: player/level null");
+            return;
+        }
 
         // 冲突守卫：其它 mod 已经占着相机实体时拒绝出窍（零干预，只提示）
         if (MC.getCameraEntity() != player) {
+            com.souloutplus.SoulOutPlus.LOGGER.warn("createCamera blocked: camera entity = {}",
+                    MC.getCameraEntity());
             if (Configs.Generic.CONFLICT_GUARD.getBooleanValue()) {
                 player.displayClientMessage(
                         Component.translatable("souloutplus.message.conflict_guard"), false);
@@ -90,6 +95,8 @@ public final class CameraState {
         MC.smartCull = false;
         soulOut = true;
 
+        com.souloutplus.SoulOutPlus.LOGGER.info("soul out: camera created at [{}, {}, {}] yaw={} pitch={}",
+                x, y, z, yaw, pitch);
         player.displayClientMessage(Component.translatable("souloutplus.message.soul_out"), true);
     }
 
