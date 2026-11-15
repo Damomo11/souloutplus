@@ -70,8 +70,16 @@ public class CameraEntity extends LocalPlayer {
         this.yBodyRotO = this.yBodyRot;
     }
 
+    /**
+     * 直接瞬移相机到指定位置+朝向。
+     * 注意：1.21.11 mojmap 里 Entity.snapTo(DDD) 内部会调 snapTo(DDDFF)（五参版）！
+     * 我们这个五参版如果反过来调 this.snapTo(x,y,z)（三参版）就形成无限递归 → StackOverflow。
+     * 所以这里直接调最底层的 absSnapTo + 位置设定，不走三参 snapTo。
+     */
     public void snapTo(double x, double y, double z, float yaw, float pitch) {
-        this.snapTo(x, y, z);
+        // absSnapTo 是真正只做"瞬移不触发位移逻辑"的底层方法；
+        // 但它内部同样有 absSnapTo(DDDFF) 重载 —— 我们只调三参版，不会回到五参版
+        this.absSnapTo(x, y, z);
         this.setCameraRotations(yaw, pitch);
     }
 }
