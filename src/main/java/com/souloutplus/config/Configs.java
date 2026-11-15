@@ -22,7 +22,6 @@ import fi.dy.masa.malilib.config.options.ConfigOptionList;
 import fi.dy.masa.malilib.event.InputEventHandler;
 import fi.dy.masa.malilib.hotkeys.IHotkey;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
-import fi.dy.masa.malilib.util.data.json.JsonUtils;
 import net.minecraft.client.Minecraft;
 
 import java.io.File;
@@ -179,13 +178,11 @@ public class Configs implements IConfigHandler {
     // ---------------- 读写盘 ----------------
     @Override
     public void load() {
-        File settingFile = new File(FILE_PATH);
-        if (settingFile.isFile()) {
-            JsonElement jsonElement = JsonUtils.parseJsonFile(settingFile.toPath());
-            if (jsonElement != null && jsonElement.isJsonObject()) {
-                JsonObject obj = jsonElement.getAsJsonObject();
-                fi.dy.masa.malilib.config.ConfigUtils.readConfigBase(obj, SoulOutPlus.MOD_ID, OPTIONS);
-            }
+        // JsonUtils 经 MalilibCompat 反射隔离（0.27.2 与 0.27.20 包路径不同，直接引用会在另一版本 NoClassDefFoundError）
+        JsonElement jsonElement = com.souloutplus.compat.MalilibCompat.parseJsonFile(new File(FILE_PATH).toPath());
+        if (jsonElement != null && jsonElement.isJsonObject()) {
+            JsonObject obj = jsonElement.getAsJsonObject();
+            fi.dy.masa.malilib.config.ConfigUtils.readConfigBase(obj, SoulOutPlus.MOD_ID, OPTIONS);
         }
     }
 
@@ -194,7 +191,7 @@ public class Configs implements IConfigHandler {
         if ((CONFIG_DIR.exists() && CONFIG_DIR.isDirectory()) || CONFIG_DIR.mkdirs()) {
             JsonObject configRoot = new JsonObject();
             fi.dy.masa.malilib.config.ConfigUtils.writeConfigBase(configRoot, SoulOutPlus.MOD_ID, OPTIONS);
-            JsonUtils.writeJsonToFile(configRoot, new File(FILE_PATH).toPath());
+            com.souloutplus.compat.MalilibCompat.writeJsonToFile(configRoot, new File(FILE_PATH).toPath());
         }
     }
 
