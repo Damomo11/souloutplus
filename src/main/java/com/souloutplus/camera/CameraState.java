@@ -94,6 +94,15 @@ public final class CameraState {
             rememberedPos = new Vec3(camera.getX(), camera.getY(), camera.getZ());
             rememberedYaw = camera.getYRot();
             rememberedPitch = camera.getXRot();
+
+            LocalPlayer player = MC.player;
+            if (player != null) {
+                player.setNoGravity(false);
+                player.noPhysics = false;
+                player.setOnGround(true);
+                player.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+                player.fallDistance = 0;
+            }
         }
         originalCameraEntity = null;
         camera = null;

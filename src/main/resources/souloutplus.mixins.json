@@ -10,7 +10,7 @@
     "MixinCameraRange",
     "MixinGameRenderer",
     "MixinLevelRenderer",
-    "MixinPlayer",
+    "MixinLevelRenderBody",
     "MixinMultiPlayerGameMode",
     "MixinGui",
     "MixinGuiCameraPlayer",
