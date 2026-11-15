@@ -1,4 +1,4 @@
-package com.souloutplus.mixin.extension;
+package com.souloutplus.extension;
 
 import org.jetbrains.annotations.Nullable;
 

@@ -1,7 +1,7 @@
 package com.souloutplus.builder;
 
 import com.souloutplus.I18n;
-import com.souloutplus.mixin.extension.ConfigExtension;
+import com.souloutplus.extension.ConfigExtension;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.options.ConfigBase;
 import org.jetbrains.annotations.Nullable;

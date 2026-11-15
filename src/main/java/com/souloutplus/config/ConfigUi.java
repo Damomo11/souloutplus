@@ -7,7 +7,7 @@ import com.souloutplus.config.Configs.Hotkeys;
 import com.souloutplus.config.Configs.Placement;
 import com.souloutplus.config.Configs.Reach;
 import com.souloutplus.config.Configs.Render;
-import com.souloutplus.mixin.extension.ConfigExtension;
+import com.souloutplus.extension.ConfigExtension;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.gui.GuiConfigsBase;
 import fi.dy.masa.malilib.gui.button.ButtonBase;

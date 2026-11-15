@@ -1,6 +1,6 @@
 package com.souloutplus.mixin.malilib;
 
-import com.souloutplus.mixin.extension.ConfigExtension;
+import com.souloutplus.extension.ConfigExtension;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigNotifiable;
 import fi.dy.masa.malilib.config.IConfigResettable;
