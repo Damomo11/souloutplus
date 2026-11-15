@@ -10,7 +10,8 @@
     "MixinGameRenderer",
     "MixinLevelRenderer",
     "MixinAbstractClientPlayer",
-    "MixinMinecraft",
+    "MixinMultiPlayerGameMode",
+    "MixinGui",
     "malilib.MixinConfigBase"
   ],
   "injectors": {
