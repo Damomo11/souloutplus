@@ -34,10 +34,15 @@ public class CameraEntity extends LocalPlayer {
     public void setCameraRotations(float yaw, float pitch) {
         this.setYRot(yaw);
         this.setXRot(pitch);
+        // prev 系同步：鼠标转向是逐帧事件（不随 tick），
+        // 渲染用 rotLerp(yRotO→yRot) 插值 —— 若只改 yRot，yRotO 每 tick 才追上，
+        // 两帧间插值起点旧/终点新 → 转视角时锯齿。Tweakeroo 的做法就是两边一起设。
         this.yRotO = yaw;
         this.xRotO = pitch;
         this.setYHeadRot(yaw);
+        this.yHeadRotO = yaw;
         this.yBodyRot = yaw;
+        this.yBodyRotO = yaw;
     }
 
     public void updateCameraRotations(float yawChange, float pitchChange) {
@@ -61,6 +66,16 @@ public class CameraEntity extends LocalPlayer {
     }
 
     public void updateLastTickPosition() {
+        // 1.21.11 渲染插值的"上tick值"三件套:
+        // 位置 = lerp(xo→x)（Camera.setup → Entity.getPosition(partial)），
+        // 朝向 = rotLerp(yRotO→yRot)。
+        // 原版 xo/yo/zo 由 ClientLevel.tickNonPassenger 开头的 setOldPosAndRot() 维护，
+        // 但我们的相机不进世界、没人 tick —— 必须自己每 tick 开头同步，
+        // 否则移动时 xo 停留在创建瞬间、x 每tick变 → 渲染插值斜率突变 → 视角一颤一颤。
+        this.xo = this.getX();
+        this.yo = this.getY();
+        this.zo = this.getZ();
+
         this.xOld = this.getX();
         this.yOld = this.getY();
         this.zOld = this.getZ();
