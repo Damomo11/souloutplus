@@ -70,7 +70,7 @@ public final class CameraState {
         float yaw = player.getYRot();
         float pitch = player.getXRot();
         double x = player.getX();
-        double y = player.getEyeY();
+        double y = player.getY();
         double z = player.getZ();
         if (Configs.Generic.REMEMBER_CAMERA_POS.getBooleanValue() && rememberedPos != null) {
             x = rememberedPos.x; y = rememberedPos.y; z = rememberedPos.z;
@@ -144,6 +144,6 @@ public final class CameraState {
         if (camera == null || MC.player == null) return;
         float yaw = MC.player.getYRot();
         float pitch = MC.player.getXRot();
-        camera.snapTo(MC.player.getX(), MC.player.getEyeY(), MC.player.getZ(), yaw, pitch);
+        camera.snapTo(MC.player.getX(), MC.player.getY(), MC.player.getZ(), yaw, pitch);
     }
 }
