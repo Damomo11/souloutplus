@@ -27,9 +27,9 @@
   ],
   "depends": {
     "fabricloader": ">=0.17.0",
-    "minecraft": ">=1.21.11 <=26.3",
+    "minecraft": ">=1.21.9 <=1.21.11",
     "fabric-api": "*",
-    "malilib": ">=0.27.0"
+    "malilib": ">=0.26.8"
   },
   "suggests": {
     "litematica": "*",
