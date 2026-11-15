@@ -40,7 +40,12 @@ public enum PlacementProtocol implements IConfigOptionListEntry {
     }
 
     @Override
-    public int getListOrdinal() {
-        return this.ordinal();
+    public IConfigOptionListEntry fromString(String value) {
+        for (PlacementProtocol entry : values()) {
+            if (entry.name.equals(value)) {
+                return entry;
+            }
+        }
+        return values()[0];
     }
 }

@@ -6,36 +6,28 @@ import com.souloutplus.interaction.InteractionGuard;
 import fi.dy.masa.malilib.interfaces.IRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.HitResult;
+import org.joml.Matrix4f;
 
 /**
- * 世界上层渲染（malilib IRenderer，每帧 renderWorldLast 调用）：
- *  - 可达性三色点（准星旁）
+ * 世界上层渲染（malilib IRenderer，每帧 onRenderWorldLast 调用）：
+ *  - 可达性三色点数据计算（结果放 HudCache，Gui.render 的 mixin 画）
  *  - 被拒方块红闪（占位，后续 ActionConfirm 接入后填充）
- *
- * 出窍时的幽灵方块预览也挂这里（GHOST_PREVIEW 开着时渲染准星处待放置方块的线框+朝向）。
+ *  - 幽灵方块预览（GHOST_PREVIEW 开着时渲染准星处待放置方块的线框+朝向，待接入渲染工具后补）
  */
 public class ReachHudRenderer implements IRenderer {
     @Override
-    public void onRenderWorldLast(net.minecraft.client.renderer.LevelRenderer levelRenderer,
-                                   float partialTicks, boolean renderBlockOutline) {
+    public void onRenderWorldLast(Matrix4f matrixStack, Matrix4f projectionMatrix) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || !CameraState.isSoulOut()) return;
 
-        // 三色点：画在准星右下 12px 处（screen-space，用矩阵栈透传太复杂，用 debug hud 的简化路径）
+        // 三色点数据（world pass 算，GUI pass 画）
         if (Configs.Render.REACH_HUD.getBooleanValue()) {
             HitResult hit = mc.hitResult;
             if (hit != null && hit.getType() != HitResult.Type.MISS) {
-                InteractionGuard.ReachColor color = InteractionGuard.colorFor(hit);
-                // 颜色缓存到静态字段，Gui.render 的 mixin 读取画点
-                HudCache.lastReachColor = color;
+                HudCache.lastReachColor = InteractionGuard.colorFor(hit);
             } else {
                 HudCache.lastReachColor = null;
             }
         }
-    }
-
-    @Override
-    public void onRenderTooltipLast(net.minecraft.client.gui.GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // no-op
     }
 }

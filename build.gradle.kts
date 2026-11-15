@@ -18,6 +18,8 @@ repositories {
     maven("https://maven.terraformersmc.com/releases") { name = "TerraformersMC" }
     maven("https://masa.dy.fi/maven") { name = "Masa" }
     maven("https://masa.dy.fi/maven/sakura-ryoko") { name = "SakuraRyoko" }
+    // malilib 1.21.x 的传递依赖 conditional-mixin 在 FallenBreath 自己的 maven 上
+    maven("https://maven.fallenbreath.me/releases") { name = "FallenBreath" }
 }
 
 dependencies {
@@ -38,7 +40,8 @@ dependencies {
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
-    toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
+    // 本机只有 JDK 25：不强制 toolchain（它会去找 JDK21 安装而失败），
+    // 用当前 JVM 的 javac --release 21 编译（JDK25 完全支持 21 字节码）
 }
 
 tasks.withType<JavaCompile>().configureEach {

@@ -9,7 +9,7 @@
     "MixinLocalPlayer",
     "MixinGameRenderer",
     "MixinLevelRenderer",
-    "MixinAbstractClientPlayer",
+    "MixinPlayer",
     "MixinMultiPlayerGameMode",
     "MixinGui",
     "malilib.MixinConfigBase"

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import static com.souloutplus.config.ConfigBuilders.*;
+import static com.souloutplus.builder.Builders.*;
 
 public class Configs implements IConfigHandler {
     private static final Configs INSTANCE = new Configs();
@@ -52,7 +52,7 @@ public class Configs implements IConfigHandler {
         /** 按住时相机转向吸附到最近的六向 */
         public static final ConfigHotkey SNAP_AIM = hotkey("snapAim")
                 .defaultStorageString("")
-                .keybindSettings(KeybindSettings.INTERNALLY_USED)
+                .keybindSettings(KeybindSettings.PRESS_ALLOWEXTRA)
                 .build();
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
@@ -184,7 +184,7 @@ public class Configs implements IConfigHandler {
             JsonElement jsonElement = JsonUtils.parseJsonFile(settingFile.toPath());
             if (jsonElement != null && jsonElement.isJsonObject()) {
                 JsonObject obj = jsonElement.getAsJsonObject();
-                fi.dy.masa.malilib.util.ConfigUtils.readConfigBase(obj, SoulOutPlus.MOD_ID, OPTIONS);
+                fi.dy.masa.malilib.config.ConfigUtils.readConfigBase(obj, SoulOutPlus.MOD_ID, OPTIONS);
             }
         }
     }
@@ -193,7 +193,7 @@ public class Configs implements IConfigHandler {
     public void save() {
         if ((CONFIG_DIR.exists() && CONFIG_DIR.isDirectory()) || CONFIG_DIR.mkdirs()) {
             JsonObject configRoot = new JsonObject();
-            fi.dy.masa.malilib.util.ConfigUtils.writeConfigBase(configRoot, SoulOutPlus.MOD_ID, OPTIONS);
+            fi.dy.masa.malilib.config.ConfigUtils.writeConfigBase(configRoot, SoulOutPlus.MOD_ID, OPTIONS);
             JsonUtils.writeJsonToFile(configRoot, new File(FILE_PATH).toPath());
         }
     }
@@ -207,23 +207,6 @@ public class Configs implements IConfigHandler {
                 new fi.dy.masa.malilib.util.data.ModInfo(SoulOutPlus.MOD_ID, SoulOutPlus.MOD_NAME, ConfigUi::new)
         );
         HotkeysCallback.initCallbacks();
-    }
-
-    // ---------------- builder 语法糖 ----------------
-    private static HotkeyConfigBuilder hotkey(String key) {
-        return new HotkeyConfigBuilder(I18n.of(key));
-    }
-
-    private static BooleanConfigBuilder bool(String key) {
-        return new BooleanConfigBuilder(I18n.of(key));
-    }
-
-    private static DoubleConfigBuilder doubleValue(String key) {
-        return new DoubleConfigBuilder(I18n.of(key));
-    }
-
-    private static OptionListConfigBuilder optionList(String key) {
-        return new OptionListConfigBuilder(I18n.of(key));
     }
 
     /** 调试用 */
