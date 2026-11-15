@@ -9,14 +9,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-/**
- * 出窍时：
- *  - tick HEAD：相机每 tick 移动（CameraState.movementTick）+ 本体输入换 DummyMovementInput（保留 shift）
- *  - tick TAIL：换回真实输入
- * （从 Tweakeroo MixinClientPlayerEntity 移植；shift 透传是本 mod 的改动点。
- *  1.21.11 的输入类型是 ClientInput，不是旧版的 Input。）
- */
 @Mixin(LocalPlayer.class)
 public abstract class MixinLocalPlayer {
     @Unique

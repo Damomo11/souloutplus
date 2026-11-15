@@ -20,10 +20,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
-
-/**
- * 配置界面（malilib GuiConfigsBase，Tweakeroo 同款：5 栏分页、hover 修改、单条重置）。
- */
 public class ConfigUi extends GuiConfigsBase {
     private static Tab tab = Tab.GENERIC;
 
@@ -44,8 +40,6 @@ public class ConfigUi extends GuiConfigsBase {
             gui.initGui();
         }
     }
-
-    /** 分页按钮占几行（窗口窄时会换行，配置列表跟着往下移） */
     private int tabRows = 1;
 
     @Override
@@ -65,8 +59,6 @@ public class ConfigUi extends GuiConfigsBase {
     protected int getBrowserHeight() {
         return super.getBrowserHeight() - (this.tabRows - 1) * 22;
     }
-
-    /** 排列分页按钮，返回占用的行数；create = false 时只计算不添加 */
     private int layoutTabs(boolean create) {
         int x = 10;
         int y = 26;

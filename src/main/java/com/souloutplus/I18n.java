@@ -3,14 +3,6 @@ package com.souloutplus;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
-
-/**
- * I18n 键封装（从打印机 mod 移植的简化版）：
- * nameKey     = souloutplus.<key>              展示名
- * descKey     = souloutplus.<key>.desc         描述
- * configName  = souloutplus.config.<key>       配置界面里的名字
- * configDesc  = souloutplus.config.<key>.desc  配置界面里的描述
- */
 public class I18n {
     private static final String PREFIX_CONFIG = "config";
     private static final String PREFIX_COMMENT = "desc";

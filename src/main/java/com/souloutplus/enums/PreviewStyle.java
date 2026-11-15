@@ -2,16 +2,9 @@ package com.souloutplus.enums;
 
 import fi.dy.masa.malilib.config.IConfigOptionListEntry;
 import fi.dy.masa.malilib.util.StringUtils;
-
-/**
- * 幽灵预览样式。
- */
 public enum PreviewStyle implements IConfigOptionListEntry {
-    /** 线框 */
     WIREFRAME("wireframe"),
-    /** 半透明填充 */
     TRANSLUCENT("translucent"),
-    /** 线框 + 朝向箭头 */
     ARROW("arrow");
 
     private final String name;

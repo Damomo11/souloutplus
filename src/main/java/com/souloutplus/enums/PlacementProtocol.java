@@ -2,18 +2,10 @@ package com.souloutplus.enums;
 
 import fi.dy.masa.malilib.config.IConfigOptionListEntry;
 import fi.dy.masa.malilib.util.StringUtils;
-
-/**
- * 精确放置协议（只在检测到 Servux / 单人内置服务端时生效）。
- */
 public enum PlacementProtocol implements IConfigOptionListEntry {
-    /** 自动：检测到 Servux 才用 V3，否则转头放置 */
     AUTO("auto"),
-    /** 强制 V3（Servux 精确放置协议，状态编码进点击坐标） */
     V3("v3"),
-    /** 强制 V2（Carpet accurateBlockPlacement 协议） */
     V2("v2"),
-    /** 关闭协议，全部走转头放置 */
     OFF("off");
 
     private final String name;

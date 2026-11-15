@@ -11,11 +11,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-/**
- * 出窍状态 HUD：左上角徽章 + 准星旁可达性三色点。
- * 颜色由 ReachHudRenderer 在 world pass 算好放进 HudCache（GUI pass 只管画）。
- */
 @Mixin(Gui.class)
 public abstract class MixinGui {
 
@@ -25,10 +20,8 @@ public abstract class MixinGui {
         Minecraft mc = Minecraft.getInstance();
         Font font = mc.font;
 
-        // 出窍徽章（左上角）
         guiGraphics.drawString(font, HudCache.SOUL_BADGE, 8, 8, 0xFFFFFF);
 
-        // 可达性三色点（准星右下）
         var color = HudCache.lastReachColor;
         if (color != null) {
             int x = mc.getWindow().getGuiScaledWidth() / 2 + 8;

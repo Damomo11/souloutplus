@@ -7,10 +7,6 @@ import fi.dy.masa.malilib.config.options.ConfigBase;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BooleanSupplier;
-
-/**
- * 配置 builder 基类（从打印机 mod 移植的简化版）。
- */
 @SuppressWarnings("unchecked")
 public abstract class BaseConfigBuilder<T extends ConfigBase<?>, B extends BaseConfigBuilder<T, B>> {
     protected final I18n i18n;

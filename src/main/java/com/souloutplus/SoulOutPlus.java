@@ -12,8 +12,6 @@ public class SoulOutPlus implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // 对齐 printer-autyism 的时序：初始化注册走 malilib 的 InitializationHandler
-        // （entrypoint 阶段太早，Configs.init 里的 keybind 注册可能赶不上 onGameInitDone 的 updateUsedKeys）
         InitializationHandler.getInstance().registerInitializationHandler(new InitHandler());
     }
 }

@@ -15,10 +15,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.BooleanSupplier;
-
-/**
- * 对 malilib 配置基类扩展：I18n 翻译键 + 可见性（从打印机 mod 移植，仅保留本 mod 用到的部分）。
- */
 @Mixin(value = ConfigBase.class, remap = false)
 public abstract class MixinConfigBase<T extends IConfigBase> implements IConfigBase, IConfigResettable, IConfigNotifiable<T>, ConfigExtension {
     @Shadow

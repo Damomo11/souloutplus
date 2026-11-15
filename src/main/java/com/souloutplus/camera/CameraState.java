@@ -9,12 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-
-/**
- * 相机生命周期管理（出窍/回魂）——从 Tweakeroo CameraEntity/CameraUtils 的状态管理移植到 mojmap 1.21.11。
- * 相机实体本身见 {@link CameraEntity}；每 tick 移动见 {@link #movementTick}，
- * 鼠标转向喂入见 MixinEntity，本体哑输入见 MixinLocalPlayer + {@link DummyMovementInput}。
- */
 public final class CameraState {
     private static final Minecraft MC = Minecraft.getInstance();
 
@@ -22,8 +16,6 @@ public final class CameraState {
     private static Entity originalCameraEntity;
     private static boolean originalCameraWasPlayer;
     private static boolean cullChunksOriginal;
-
-    /** 记住的出窍位置（跨出窍会话），仅 REMEMBER_CAMERA_POS 开着时用 */
     private static Vec3 rememberedPos;
     private static float rememberedYaw, rememberedPitch;
 
@@ -31,8 +23,6 @@ public final class CameraState {
 
     private CameraState() {
     }
-
-    // ---------------- 生命周期 ----------------
 
     public static boolean isSoulOut() {
         return soulOut;
@@ -57,7 +47,6 @@ public final class CameraState {
             return;
         }
 
-        // 冲突守卫：其它 mod 已经占着相机实体时拒绝出窍（零干预，只提示）
         if (MC.getCameraEntity() != player) {
             com.souloutplus.SoulOutPlus.LOGGER.warn("createCamera blocked: camera entity = {}",
                     MC.getCameraEntity());
@@ -72,14 +61,12 @@ public final class CameraState {
         ClientRecipeBook recipeBook = player.getRecipeBook();
         ClientLevel level = MC.level;
 
-        // 1.21.11: LocalPlayer(mc, level, connection, stats, recipeBook, Input, printChat)
         camera = new CameraEntity(MC, level, MC.getConnection(), stats, recipeBook,
                 net.minecraft.world.entity.player.Input.EMPTY);
         originalCameraEntity = MC.getCameraEntity();
         originalCameraWasPlayer = originalCameraEntity == player;
         cullChunksOriginal = MC.smartCull;
 
-        // 出窍位置：记住的位置优先，否则从本体眼睛出发
         float yaw = player.getYRot();
         float pitch = player.getXRot();
         double x = player.getX();
@@ -102,7 +89,6 @@ public final class CameraState {
 
     private static void removeCamera() {
         if (MC.level != null && camera != null) {
-            // 回魂：恢复原相机实体（通常是玩家），恢复区块剔除
             MC.setCameraEntity(originalCameraWasPlayer ? MC.player : originalCameraEntity);
             MC.smartCull = cullChunksOriginal;
             rememberedPos = new Vec3(camera.getX(), camera.getY(), camera.getZ());
@@ -116,22 +102,12 @@ public final class CameraState {
             MC.player.displayClientMessage(Component.translatable("souloutplus.message.soul_in"), true);
         }
     }
-
-    /** 世界卸载 / 换世界时强制回魂（InitHandler 的 tick 钩子里检查） */
     public static void forceRemove() {
         if (isSoulOut()) {
             removeCamera();
         }
         rememberedPos = null;
     }
-
-    // ---------------- 每 tick ----------------
-
-    /**
-     * 每 client tick 调（MixinLocalPlayer 在 LocalPlayer.tick HEAD 注入）：
-     * 出窍时按键盘状态移动相机。
-     * 键盘读 MC.options 的原始 KeyMapping（本体的 ClientInput 已被换成哑输入）。
-     */
     public static void movementTick() {
         if (!isSoulOut() || camera == null || MC.player == null) return;
 
@@ -141,8 +117,6 @@ public final class CameraState {
         double forward = 0, strafe = 0, up = 0;
         if (options.keyUp.isDown()) forward += 1;
         if (options.keyDown.isDown()) forward -= 1;
-        // strafe 符号对齐 Tweakeroo（MiscUtils.calculatePlayerMotion）: left=+1, right=-1
-        // （applyMotion 的 z 分量 = forward*zFactor + strafe*xFactor 是按这个约定推的，反了就左右镜像）
         if (options.keyLeft.isDown()) strafe += 1;
         if (options.keyRight.isDown()) strafe -= 1;
         if (options.keyJump.isDown()) up += 1;
@@ -151,15 +125,12 @@ public final class CameraState {
 
         camera.updateLastTickPosition();
         double scaled = sprinting ? speed * 3 : speed;
-        // 惯性：不开了就全速；开着用 0.4 衰减因子（下一版引入帧间速度累积）
         if (!Configs.Generic.CAMERA_INERTIA.getBooleanValue()) {
             camera.applyMotion(forward, up, strafe, scaled);
         } else {
             camera.applyMotion(forward * 0.6, up * 0.6, strafe * 0.6, scaled);
         }
     }
-
-    /** 相机瞬移回本体头顶（热键） */
     public static void teleportToBody() {
         if (camera == null || MC.player == null) return;
         float yaw = MC.player.getYRot();
