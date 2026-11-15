@@ -1,5 +1,6 @@
 package com.souloutplus;
 
+import fi.dy.masa.malilib.event.InitializationHandler;
 import net.fabricmc.api.ClientModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ public class SoulOutPlus implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        InitHandler.init();
+        // 对齐 printer-autyism 的时序：初始化注册走 malilib 的 InitializationHandler
+        // （entrypoint 阶段太早，Configs.init 里的 keybind 注册可能赶不上 onGameInitDone 的 updateUsedKeys）
+        InitializationHandler.getInstance().registerInitializationHandler(new InitHandler());
     }
 }

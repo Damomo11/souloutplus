@@ -198,7 +198,13 @@ public class Configs implements IConfigHandler {
         }
     }
 
+    private static boolean inited = false;
+
     public static void init() {
+        if (inited) {
+            return;  // 幂等：entrypoint + malilib InitializationHandler 都可能触达
+        }
+        inited = true;
         Configs.INSTANCE.load();
         ConfigManager.getInstance().registerConfigHandler(SoulOutPlus.MOD_ID, Configs.INSTANCE);
         InputEventHandler.getKeybindManager().registerKeybindProvider(InputHandler.getInstance());
