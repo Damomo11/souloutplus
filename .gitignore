@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+out/
+classes/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+bin/
+
+# Fabric/Loom
+run/
+remappedSrc/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# 备份目录本身不入库
+backup/
