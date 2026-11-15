@@ -13,6 +13,7 @@
     "MixinPlayer",
     "MixinMultiPlayerGameMode",
     "MixinGui",
+    "MixinGuiCameraPlayer",
     "MixinMinecraft",
     "MixinClientLevel",
     "malilib.MixinConfigBase"

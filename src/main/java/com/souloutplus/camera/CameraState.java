@@ -141,8 +141,10 @@ public final class CameraState {
         double forward = 0, strafe = 0, up = 0;
         if (options.keyUp.isDown()) forward += 1;
         if (options.keyDown.isDown()) forward -= 1;
-        if (options.keyLeft.isDown()) strafe -= 1;
-        if (options.keyRight.isDown()) strafe += 1;
+        // strafe 符号对齐 Tweakeroo（MiscUtils.calculatePlayerMotion）: left=+1, right=-1
+        // （applyMotion 的 z 分量 = forward*zFactor + strafe*xFactor 是按这个约定推的，反了就左右镜像）
+        if (options.keyLeft.isDown()) strafe += 1;
+        if (options.keyRight.isDown()) strafe -= 1;
         if (options.keyJump.isDown()) up += 1;
         if (options.keyShift.isDown()) up -= 1;
         boolean sprinting = options.keySprint.isDown();
