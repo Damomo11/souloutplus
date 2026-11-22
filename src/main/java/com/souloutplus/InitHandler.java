@@ -11,12 +11,14 @@ import fi.dy.masa.malilib.interfaces.IClientTickHandler;
 import fi.dy.masa.malilib.interfaces.IInitializationHandler;
 import net.minecraft.client.Minecraft;
 public class InitHandler implements IInitializationHandler {
+    private static final ReachHudRenderer RENDERER = new ReachHudRenderer();
     private static boolean ticked = false;
 
     @Override
     public void registerModHandlers() {
         Configs.init();
-        RenderEventHandler.getInstance().registerWorldLastRenderer(new ReachHudRenderer());
+        RenderEventHandler.getInstance().registerWorldLastRenderer(RENDERER);
+        RenderEventHandler.getInstance().registerInGameGuiRenderer(RENDERER);
         TickHandler.getInstance().registerClientTickHandler(new IClientTickHandler() {
             @Override
             public void onClientTick(Minecraft mc) {

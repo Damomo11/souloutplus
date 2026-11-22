@@ -21,11 +21,14 @@ Tweakeroo 的自由视角与投影打印机（litematica printer）的远程操�
 
 ## 环境要求
 
-- Minecraft **1.21.11**（也兼容 1.21.9 / 1.21.10）
-- Fabric Loader ≥ 0.17.0
-- **MaLiLib** ≥ 0.26.8
+- Minecraft **26.2**（不混淆时代：Mojang 官方类名、无 intermediary、Java 25）
+- Fabric Loader ≥ 0.20.0
+- **MaLiLib** ≥ 0.29（26.2 线 0.29.x）
 - Fabric API
 - ModMenu（可选）
+
+> 旧版本 **1.21.9 / 1.21.10 / 1.21.11**（混淆+intermediary 时代）的构建线在 [`1.21.11` 分支](https://github.com/Damomo11/souloutplus/tree/1.21.11)。
+> 26.1 的渲染结构与 26.2 不同（LevelRenderer.renderLevel → LevelExtractor/Hud），单 jar 不跨 26.1/26.2，需要时按同样方式另起构建线。
 
 ## 安装
 

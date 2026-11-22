@@ -51,8 +51,8 @@ public final class CameraState {
             com.souloutplus.SoulOutPlus.LOGGER.warn("createCamera blocked: camera entity = {}",
                     MC.getCameraEntity());
             if (Configs.Generic.CONFLICT_GUARD.getBooleanValue()) {
-                player.displayClientMessage(
-                        Component.translatable("souloutplus.message.conflict_guard"), false);
+                player.sendSystemMessage(
+                        Component.translatable("souloutplus.message.conflict_guard"));
             }
             return;
         }
@@ -62,7 +62,7 @@ public final class CameraState {
         ClientLevel level = MC.level;
 
         camera = new CameraEntity(MC, level, MC.getConnection(), stats, recipeBook,
-                net.minecraft.world.entity.player.Input.EMPTY);
+                net.minecraft.world.entity.player.Input.EMPTY, player.chatAbilities());
         originalCameraEntity = MC.getCameraEntity();
         originalCameraWasPlayer = originalCameraEntity == player;
         cullChunksOriginal = MC.smartCull;
@@ -84,7 +84,7 @@ public final class CameraState {
 
         com.souloutplus.SoulOutPlus.LOGGER.info("soul out: camera created at [{}, {}, {}] yaw={} pitch={}",
                 x, y, z, yaw, pitch);
-        player.displayClientMessage(Component.translatable("souloutplus.message.soul_out"), true);
+        player.sendOverlayMessage(Component.translatable("souloutplus.message.soul_out"));
     }
 
     private static void removeCamera() {
@@ -108,7 +108,7 @@ public final class CameraState {
         camera = null;
         soulOut = false;
         if (MC.player != null) {
-            MC.player.displayClientMessage(Component.translatable("souloutplus.message.soul_in"), true);
+            MC.player.sendOverlayMessage(Component.translatable("souloutplus.message.soul_in"));
         }
     }
     public static void forceRemove() {

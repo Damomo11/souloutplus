@@ -4,6 +4,7 @@ import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.multiplayer.chat.ChatAbilities;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.util.Mth;
@@ -13,8 +14,8 @@ import net.minecraft.world.phys.Vec3;
 public class CameraEntity extends LocalPlayer {
     public CameraEntity(Minecraft minecraft, ClientLevel level, ClientPacketListener connection,
                         StatsCounter stats, ClientRecipeBook recipeBook,
-                        net.minecraft.world.entity.player.Input input) {
-        super(minecraft, level, connection, stats, recipeBook, input, false);
+                        net.minecraft.world.entity.player.Input input, ChatAbilities chatAbilities) {
+        super(minecraft, level, connection, stats, recipeBook, input, false, chatAbilities);
         this.noPhysics = true;
     }
 

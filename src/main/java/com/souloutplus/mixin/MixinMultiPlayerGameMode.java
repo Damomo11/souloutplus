@@ -17,19 +17,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(net.minecraft.client.multiplayer.MultiPlayerGameMode.class)
 public abstract class MixinMultiPlayerGameMode {
 
-    @Inject(method = "startDestroyBlock", at = @At("HEAD"), cancellable = true)
-    private void souloutplus$guardStartDestroy(net.minecraft.core.BlockPos pos, net.minecraft.core.Direction face,
-                                                CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "destroyBlock", at = @At("HEAD"), cancellable = true)
+    private void souloutplus$guardDestroy(net.minecraft.core.BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (InteractionGuard.shouldBlockClicks()) {
             cir.setReturnValue(false);
-        }
-    }
-
-    @Inject(method = "continueDestroyBlock", at = @At("HEAD"), cancellable = true)
-    private void souloutplus$guardContinueDestroy(net.minecraft.core.BlockPos pos, net.minecraft.core.Direction face,
-                                                  CallbackInfoReturnable<Boolean> cir) {
-        if (InteractionGuard.shouldBlockClicks()) {
-            cir.setReturnValue(true);
         }
     }
 
@@ -49,16 +40,8 @@ public abstract class MixinMultiPlayerGameMode {
     }
 
     @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-    private void souloutplus$guardInteract(Player player, Entity target, InteractionHand hand,
+    private void souloutplus$guardInteract(Player player, Entity target, EntityHitResult hit, InteractionHand hand,
                                            CallbackInfoReturnable<InteractionResult> cir) {
-        if (CameraState.isSoulOut() && !Configs.Generic.ENTITY_INTERACT.getBooleanValue()) {
-            cir.setReturnValue(InteractionResult.PASS);
-        }
-    }
-
-    @Inject(method = "interactAt", at = @At("HEAD"), cancellable = true)
-    private void souloutplus$guardInteractAt(Player player, Entity target, EntityHitResult hit, InteractionHand hand,
-                                             CallbackInfoReturnable<InteractionResult> cir) {
         if (CameraState.isSoulOut() && !Configs.Generic.ENTITY_INTERACT.getBooleanValue()) {
             cir.setReturnValue(InteractionResult.PASS);
         }

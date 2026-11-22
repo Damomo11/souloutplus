@@ -2,20 +2,18 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.souloutplus.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "mixins": [],
   "client": [
     "MixinEntity",
     "MixinLocalPlayer",
     "MixinCameraRange",
     "MixinGameRenderer",
-    "MixinLevelRenderer",
+    "MixinLevelExtractor",
     "MixinLevelRenderBody",
     "MixinMultiPlayerGameMode",
-    "MixinGui",
     "MixinGuiCameraPlayer",
     "MixinMinecraft",
-    "MixinClientLevel",
     "malilib.MixinConfigBase"
   ],
   "injectors": {

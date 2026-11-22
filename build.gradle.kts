@@ -1,5 +1,5 @@
 plugins {
-    // fabric-loom-remap for obfuscated versions (1.21.11 is still remapped)
+    // 26.x 不混淆时代：loom-back-compat 选 unobf 变体 → 标准 fabric-loom（loomx.loom_version）
     id("dev.kikugie.loom-back-compat")
 }
 
@@ -25,28 +25,27 @@ repositories {
 dependencies {
     minecraft("com.mojang:minecraft:$mc")
     loomx.applyMojangMappings()
-    modImplementation("net.fabricmc:fabric-loader:0.19.3")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.140.2+$mc")
+    modImplementation("net.fabricmc:fabric-loader:0.20.1")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.161.0+$mc")
 
     // MaLiLib at runtime (config GUI, hotkeys) - not bundled
-    modImplementation("fi.dy.masa.malilib:malilib-fabric-$mc:0.27.20")
+    modImplementation("fi.dy.masa.malilib:malilib-fabric-$mc:0.29.6")
 
     // Optional integrations: compile-time only, detected at runtime
-    modCompileOnly("fi.dy.masa.litematica:litematica-fabric-$mc:0.26.16")
-    modCompileOnly("fi.dy.masa.tweakeroo:tweakeroo-fabric-$mc:0.27.15")
-    modCompileOnly("com.terraformersmc:modmenu:17.0.0")
+    modCompileOnly("fi.dy.masa.litematica:litematica-fabric-$mc:0.28.8")
+    modCompileOnly("fi.dy.masa.tweakeroo:tweakeroo-fabric-$mc:0.29.5")
+    modCompileOnly("com.terraformersmc:modmenu:20.0.3")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-    // 本机只有 JDK 25：不强制 toolchain（它会去找 JDK21 安装而失败），
-    // 用当前 JVM 的 javac --release 21 编译（JDK25 完全支持 21 字节码）
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+    // 26.x 运行时即 Java 25（game class major 69），本机 JDK 25 直接编 --release 25
 }
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
-    options.release.set(21)
+    options.release.set(25)
 }
 
 tasks.processResources {

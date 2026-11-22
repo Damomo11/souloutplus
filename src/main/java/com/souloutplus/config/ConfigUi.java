@@ -28,7 +28,7 @@ public class ConfigUi extends GuiConfigsBase {
     }
 
     public ConfigUi() {
-        this(Minecraft.getInstance().screen);
+        this(Minecraft.getInstance().gui.screen());
     }
 
     private static String SouloulVersionSafe() {
@@ -36,7 +36,7 @@ public class ConfigUi extends GuiConfigsBase {
     }
 
     public static void refresh() {
-        if (Minecraft.getInstance().screen instanceof ConfigUi gui) {
+        if (Minecraft.getInstance().gui.screen() instanceof ConfigUi gui) {
             gui.initGui();
         }
     }

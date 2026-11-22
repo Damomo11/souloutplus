@@ -23,7 +23,7 @@ public class HotkeysCallback {
         Configs.Hotkeys.OPEN_CONFIG.getKeybind().setCallback((action, keybind) -> {
             SoulOutPlus.LOGGER.info("hotkey: openConfigGui pressed");
             if (client.player != null && client.level != null) {
-                client.setScreen(new ConfigUi());
+                client.gui.setScreen(new ConfigUi());
             }
             return true;
         });

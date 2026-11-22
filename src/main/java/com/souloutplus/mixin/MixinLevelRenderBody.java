@@ -3,14 +3,13 @@ package com.souloutplus.mixin;
 import com.souloutplus.camera.CameraState;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.extract.LevelExtractor;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(LevelRenderer.class)
+@Mixin(LevelExtractor.class)
 public abstract class MixinLevelRenderBody {
 
     @Redirect(method = "extractVisibleEntities",
